@@ -65,25 +65,25 @@ export default function HomePage() {
       title: "Monte Charge",
       description: "Transport de marchandises efficace et sécurisé.",
       image: "/images/montecharge.png",
-      link: "#" // À mettre à jour quand la page sera créée
+      link: "/services/monte-charge" // À mettre à jour quand la page sera créée
     },
     {
       title: "Monte Voiture",
       description: "Solutions de parking vertical pour véhicules.",
       image: "/images/montevoiture.png",
-      link: "#" // À mettre à jour quand la page sera créée
+      link: "/services/monte-voiture" // À mettre à jour quand la page sera créée
     },
     {
       title: "Escalier Mécanique",
       description: "Escaliers mécaniques modernes et fiables.",
       image: "/images/escalator.png",
-      link: "#" // À mettre à jour quand la page sera créée
+      link: "/services/escalier-mecanique" // À mettre à jour quand la page sera créée
     },
     {
       title: "Ascenseurs pour Handicapés",
       description: "Accessibilité optimale pour personnes à mobilité réduite.",
       image: "/images/ascenseurhandicape.png",
-      link: "#" // À mettre à jour quand la page sera créée
+      link: "/services/ascenseur-handicape" // À mettre à jour quand la page sera créée
     },
   ];
 
@@ -166,8 +166,8 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-              <button onClick={() => scrollToSection('about')} className="text-gray-600 hover:text-blue-600 bg-transparent border-none">À Propos</button>
-              <a href="/conception" className="text-gray-600 hover:text-blue-600">Conception</a>
+              <a href="/conception" className="text-gray-600 hover:text-blue-600">Projets & Réalisations</a>
+              <a href="/a-propos" className="text-gray-600 hover:text-blue-600">À propos de nous</a>
             </nav>
             <a href="/devis">
               <Button className="btn-gradient">Demander un devis</Button>

@@ -16,21 +16,21 @@ import {
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { servicesData } from "@/lib/data"
+import { useState } from "react"
 
 // --- COMPOSANTS RÉUTILISABLES : NAVBAR ET FOOTER (Tirés de votre projet existant) ---
 
 const Navbar = () => {
   const scrollToHomepageSection = (sectionId: string) => {
-    // Si nous ne sommes pas sur la page d'accueil, redirigez d'abord
     if (typeof window !== 'undefined' && window.location.pathname !== '/') {
       window.location.href = `/#${sectionId}`;
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
-        const headerOffset = 80; // Hauteur de votre header fixe
+        const headerOffset = 80;
         const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - headerOffset;
-
         window.scrollTo({
           top: offsetPosition,
           behavior: "smooth",
@@ -44,11 +44,9 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <a href="/" className="flex items-center space-x-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/logo.png" alt="ELAS Logo" width={50} height={50} className="object-contain" />
             <span className="font-semibold text-gray-800 text-xl">ELAS</span>
           </a>
-
           <nav className="hidden md:flex items-center space-x-8 relative">
             <div className="relative group">
               <button onClick={() => scrollToHomepageSection('services')} className="text-gray-600 hover:text-blue-600 flex items-center bg-transparent border-none">
@@ -65,10 +63,9 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <a href="/#about" className="text-gray-600 hover:text-blue-600">À Propos</a>
-            <a href="/conception" className="text-gray-600 hover:text-blue-600">Conception</a>
+            <a href="/conception" className="text-gray-600 hover:text-blue-600">Projets & Réalisations</a>
+            <a href="/a-propos" className="text-gray-600 hover:text-blue-600">À propos de nous</a>
           </nav>
-          
           <a href="/devis">
              <Button className="btn-gradient">Demander un devis</Button>
           </a>
@@ -85,7 +82,6 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/images/logo.png" alt="ELAS Logo" width={40} height={40} className="object-contain" />
                 <span className="font-semibold text-xl">ELAS</span>
               </div>
@@ -131,135 +127,83 @@ const Footer = () => {
     )
 }
 
-// --- DONNÉES SPÉCIFIQUES À LA PAGE ---
-
-const products = [
-    {
-      name: "ELAS Prestige",
-      image: "/images/product1.png",
-      tagline: "L'élégance sur mesure",
-      description: "La solution de luxe pour les bâtiments résidentiels et commerciaux exigeants, alliant design personnalisable et technologie de pointe.",
-      specs: { capacity: "4-8 Personnes", speed: "1.0 m/s", usage: "Résidentiel / Commercial de Luxe", motor: "Gearless Synchrone" },
-      features: ["Finitions intérieures haut de gamme (marbre, bois, cuir)", "Fonctionnement ultra-silencieux (< 40 dB)", "Système d'appel par smartphone (option)", "Éclairage LED d'ambiance personnalisable"]
-    },
-    {
-      name: "ELAS Vision",
-      image: "/images/product2.png",
-      tagline: "Une vue imprenable",
-      description: "Offrez une vue panoramique et une sensation d'espace avec nos ascenseurs vitrés, parfaits pour les centres commerciaux et les hôtels.",
-      specs: { capacity: "6-12 Personnes", speed: "1.5 m/s", usage: "Commercial / Public / Hôtels", motor: "Gearless à haute performance" },
-      features: ["Parois en verre de sécurité feuilleté", "Structure en acier inoxydable ou peinte", "Options de cabines circulaires ou carrées", "Intégration parfaite avec les façades modernes"]
-    },
-    {
-      name: "ELAS Access",
-      image: "/images/product3.png",
-      tagline: "La solution compacte et efficace",
-      description: "Conçu pour s'adapter aux espaces les plus restreints sans compromis sur la sécurité et le confort. Idéal pour les maisons individuelles et les petits immeubles.",
-      specs: { capacity: "2-4 Personnes", speed: "0.5 m/s", usage: "Résidentiel / Espaces réduits", motor: "Hydraulique ou à vis" },
-      features: ["Faible encombrement de la gaine", "Installation rapide et simple", "Consommation électrique réduite", "Idéal pour les projets de rénovation"]
-    },
-];
-
 // --- COMPOSANT PRINCIPAL DE LA PAGE ---
 
 export default function MontePersonnePage() {
+  const service = servicesData['monte-personne'];
+  const [activeGamme, setActiveGamme] = useState(service.gammes[0].id);
+  const gamme = service.gammes.find(g => g.id === activeGamme);
+
   return (
     <div className="bg-white">
       <Navbar />
-
       <main>
         {/* Hero Section */}
-        <section className="relative h-[60vh] bg-cover bg-center flex items-center" style={{ backgroundImage: "url('/images/hero-monte-personne.jpg')" }}>
+        <section className="relative h-[60vh] bg-cover bg-center flex items-center" style={{ backgroundImage: `url('${service.heroImage}')` }}>
           <div className="absolute inset-0 bg-black/50"></div>
           <div className="relative container mx-auto px-4 text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">Nos Solutions de Monte-Personnes</h1>
-            <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-gray-200">
-              Élevez votre quotidien avec des ascenseurs sûrs, élégants et performants, adaptés à tous les types de bâtiments.
-            </p>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">{service.title}</h1>
           </div>
         </section>
-
         {/* Section d'introduction */}
         <section className="py-16 md:py-24">
             <div className="container mx-auto px-4 text-center max-w-4xl">
-                <h2 className="text-3xl font-bold text-gray-800">Confort, Sécurité et Élégance à chaque étage</h2>
+                <h2 className="text-3xl font-bold text-gray-800">{service.intro.title}</h2>
                 <p className="mt-4 text-gray-600 text-lg">
-                    Chez ELAS, nous concevons des solutions de transport vertical pour personnes qui s'intègrent parfaitement à l'architecture de votre bâtiment, qu'il soit neuf ou existant. Nos monte-personnes sont le fruit d'une ingénierie de précision, offrant une expérience de déplacement fluide, silencieuse et totalement sécurisée.
+                    {service.intro.description}
                 </p>
             </div>
         </section>
-
-        {/* Showcase des Produits */}
-        <section className="py-16 md:py-24 bg-gray-50">
+        {/* Sélecteur de gamme */}
+        <section className="py-8">
+          <div className="container mx-auto px-4 flex gap-4 justify-center">
+            {service.gammes.map(g => (
+              <button
+                key={g.id}
+                className={`px-4 py-2 rounded font-semibold border transition-colors duration-200 ${activeGamme === g.id ? "bg-blue-600 text-white border-blue-600" : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-blue-50"}`}
+                onClick={() => setActiveGamme(g.id)}
+              >
+                {g.name}
+              </button>
+            ))}
+          </div>
+        </section>
+        {/* Modèles de la gamme sélectionnée */}
+        <section className="py-8">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Découvrez nos modèles phares</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {products.map((product) => (
-                <Card key={product.name} className="overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col group">
-                  <div className="relative w-full h-72 bg-gray-200">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  </div>
-                  <div className="p-6 flex flex-col flex-grow">
-                      <CardTitle className="text-xl text-blue-700">{product.name}</CardTitle>
-                      <CardDescription className="mt-1 flex-grow">{product.tagline}</CardDescription>
-                      <div className="mt-auto pt-6 flex gap-2">
-                          <Popover>
-                              <PopoverTrigger asChild>
-                                  <Button variant="outline" className="w-full">Voir les détails</Button>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-96" align="start">
-                                  <div className="grid gap-4">
-                                      <div className="space-y-1">
-                                          <h4 className="font-bold leading-none">{product.name}</h4>
-                                          <p className="text-sm text-muted-foreground">{product.description}</p>
-                                      </div>
-                                      <div className="grid gap-2">
-                                          <h5 className="font-semibold text-sm">Spécifications</h5>
-                                          <div className="text-xs text-gray-600 space-y-1">
-                                              <p><strong>Capacité :</strong> {product.specs.capacity}</p>
-                                              <p><strong>Vitesse :</strong> {product.specs.speed}</p>
-                                              <p><strong>Usage :</strong> {product.specs.usage}</p>
-                                              <p><strong>Motorisation :</strong> {product.specs.motor}</p>
-                                          </div>
-                                          <h5 className="font-semibold text-sm mt-2">Atouts majeurs</h5>
-                                          <ul className="list-disc list-inside text-xs text-gray-600 space-y-1">
-                                              {product.features.map(f => <li key={f}>{f}</li>)}
-                                          </ul>
-                                      </div>
-                                      <a href="/devis" className="mt-2 block">
-                                          <Button className="w-full">Demander un devis pour ce modèle</Button>
-                                      </a>
-                                  </div>
-                              </PopoverContent>
-                          </Popover>
-                      </div>
-                  </div>
-                </Card>
+            <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">{gamme.name}</h2>
+            <p className="text-center text-gray-600 mb-8">{gamme.description}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {gamme.models.map(model => (
+                <div key={model.id} className="border rounded-lg p-6 bg-white shadow">
+                  <img src={model.image} alt={model.name} className="w-full h-48 object-cover rounded mb-4" />
+                  <h3 className="font-bold text-lg mb-2">{model.name}</h3>
+                  <p className="mb-2 text-gray-700">{model.description}</p>
+                  <ul className="mb-2 text-sm text-gray-600 list-disc pl-4">
+                    {Object.entries(model).map(([key, value]) =>
+                      !['id', 'name', 'description', 'image'].includes(key) ? (
+                        <li key={key}><strong>{key.charAt(0).toUpperCase() + key.slice(1)} :</strong> {value}</li>
+                      ) : null
+                    )}
+                  </ul>
+                </div>
               ))}
             </div>
           </div>
         </section>
-
-
-        {/* Section CTA */}
-        <section className="py-20 bg-blue-700">
-          <div className="container mx-auto px-4 text-center text-white">
-            <h2 className="text-3xl font-bold">Voir nos monte-personnes en action</h2>
-            <p className="mt-4 max-w-2xl mx-auto text-blue-100">
-              Explorez nos réalisations pour voir comment nous avons intégré nos solutions dans des projets variés.
-            </p>
-            <a href="/conception?filter=monte-personne">
-              <Button size="lg" className="mt-8 bg-white text-blue-700 hover:bg-gray-100 text-lg px-8 py-3 shadow-lg">
-                <Eye className="mr-2 h-5 w-5" />
-                Voir nos projets relatifs
-              </Button>
-            </a>
+        {/* Caractéristiques techniques générales */}
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl font-bold mb-4 text-center">Caractéristiques Techniques Générales</h2>
+            <ul className="max-w-2xl mx-auto text-gray-700 list-disc pl-6 space-y-2">
+              {service.caracteristiques.map((carac, idx) => (
+                <li key={idx}>{carac}</li>
+              ))}
+            </ul>
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
-  )
+  );
 }
