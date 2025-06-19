@@ -39,6 +39,14 @@ function formatDataAsHtml(data: any): string {
     return html;
 }
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '100mb',
+    },
+  },
+};
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
