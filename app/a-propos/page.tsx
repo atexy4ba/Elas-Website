@@ -72,9 +72,14 @@ export default function AboutPage() {
 
   // Certificats (exemple)
   const certificates = [
-    { name: "ISO 9001", image: "/images/placeholder-logo.png" },
-    { name: "Certification Sécurité", image: "/images/placeholder-logo.png" },
+    { name: "EN 13015 A1", image: "/certificats/EN-13015-A1.jpg" },
+    { name: "ISO 9001:2015", image: "/certificats/ISO-9001-2015.jpg" },
+    { name: "Kalite Yönetim Belgesi", image: "/certificats/Kalite-Yönetim-Belgesi.jpg" },
+    { name: "Tam Kalite Güvence", image: "/certificats/Tam-Kalite-Güvence.jpg" },
   ];
+
+  // État pour la modale d'image
+  const [openImage, setOpenImage] = useState<{src: string, alt: string} | null>(null);
 
   return (
     <div className="min-h-screen bg-white">
@@ -163,12 +168,24 @@ export default function AboutPage() {
           <div className="flex flex-wrap justify-center gap-8">
             {certificates.map((cert, i) => (
               <div key={i} className="flex flex-col items-center">
-                <img src={cert.image} alt={cert.name} className="w-24 h-24 object-contain mb-2" />
+                <button onClick={() => setOpenImage({src: cert.image, alt: cert.name})} className="focus:outline-none">
+                  <img src={cert.image} alt={cert.name} className="w-24 h-24 object-contain mb-2 hover:scale-110 transition-transform duration-200 cursor-pointer" />
+                </button>
                 <span className="text-gray-700 font-medium">{cert.name}</span>
               </div>
             ))}
           </div>
         </div>
+        {/* Modale d'image */}
+        {openImage && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+            <div className="relative">
+              <button onClick={() => setOpenImage(null)} className="absolute -top-4 -right-4 bg-white rounded-full shadow p-1 text-gray-700 hover:bg-gray-200 text-2xl font-bold w-10 h-10 flex items-center justify-center focus:outline-none">&times;</button>
+              <img src={openImage.src} alt={openImage.alt} className="max-h-[80vh] max-w-[90vw] rounded shadow-lg" />
+              <div className="text-center text-white mt-2 font-medium">{openImage.alt}</div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Section Projets et Références */}
