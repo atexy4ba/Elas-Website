@@ -2,8 +2,9 @@
 
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { google } from 'googleapis';
 
-// Fonction pour formater les données du formulaire en HTML
+// --- La fonction formatDataAsHtml reste identique ---
 function formatDataAsHtml(data: any): string {
     const reference = `ELAS-${Date.now()}`;
     const senderName = data.fullName || 'Client non identifié';
@@ -60,19 +61,86 @@ function formatDataAsHtml(data: any): string {
     return html;
 }
 
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '100mb',
-    },
-  },
-};
+
+// --- NOUVELLE VERSION DE LA FONCTION appendToSheet ---
+
+async function appendToSheet(data: any) {
+    // 1. Définition des en-têtes des colonnes
+    const HEADERS = [[
+        'Date de soumission', 'Référence', 'Nom Complet', 'Email', 'Téléphone', 
+        'Wilaya', 'Profil Client', 'Type de Projet', 'Type de Bâtiment', 
+        'Nature du Projet', 'Nombre d\'étages', 'Charge Maximale (kg)', 'Informations Complémentaires'
+    ]];
+    const SHEET_NAME = 'Devis'; // Assurez-vous que ce nom correspond à votre onglet
+
+    try {
+        const auth = new google.auth.GoogleAuth({
+            credentials: {
+                client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
+                private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+            },
+            scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+
+        const sheets = google.sheets({ version: 'v4', auth });
+        const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+
+        // 2. Vérifier si la feuille est vide pour ajouter les en-têtes
+        const getRows = await sheets.spreadsheets.values.get({
+            spreadsheetId,
+            range: `${SHEET_NAME}!A1:A1`,
+        });
+
+        if (!getRows.data.values || getRows.data.values.length === 0) {
+            // La feuille est vide, on écrit les en-têtes
+            await sheets.spreadsheets.values.update({
+                spreadsheetId,
+                range: `${SHEET_NAME}!A1`,
+                valueInputOption: 'USER_ENTERED',
+                requestBody: {
+                    values: HEADERS,
+                },
+            });
+        }
+
+        // 3. Préparer et ajouter la nouvelle ligne de données
+        const newRow = [[
+            new Date().toISOString(),
+            `ELAS-${Date.now()}`,
+            data.fullName || '',
+            data.email || '',
+            data.phone || '',
+            data.wilaya || '',
+            data.contactType || '',
+            data.projectType || '',
+            data.buildingType || '',
+            data.projectNature || '',
+            data.floorCount || '',
+            data.maxLoad || '',
+            data.additionalInfo || '',
+        ]];
+
+        await sheets.spreadsheets.values.append({
+            spreadsheetId,
+            range: `${SHEET_NAME}!A1`,
+            valueInputOption: 'USER_ENTERED',
+            requestBody: {
+                values: newRow,
+            },
+        });
+
+    } catch (error) {
+        console.error('Google Sheets API Error:', error);
+    }
+}
+
+
+// --- Le handler POST reste identique ---
 
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     
-    // Extraire les données du formulaire
     const data: any = {};
     for (const [key, value] of formData.entries()) {
       if (key !== 'file') {
@@ -80,29 +148,9 @@ export async function POST(request: Request) {
       }
     }
 
-    // Récupérer le fichier s'il existe
     const file = formData.get('file') as File | null;
 
-    // Configuration du transporteur Nodemailer
-    let transporter;
-    
-    // En mode développement, utiliser Ethereal Email pour les tests
-    if (process.env.NODE_ENV === 'development') {
-      // Créer un compte de test Ethereal
-      const testAccount = await nodemailer.createTestAccount();
-      
-      transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      });
-    } else {
-      // Configuration de production
-      transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_SERVER_HOST,
         port: Number(process.env.EMAIL_SERVER_PORT),
         secure: true,
@@ -110,19 +158,17 @@ export async function POST(request: Request) {
           user: process.env.EMAIL_SERVER_USER,
           pass: process.env.EMAIL_SERVER_PASS,
         },
-      });
-    }
+    });
 
     const mailOptions: any = {
-      from: `"${data.fullName || 'Site Web ELAS'}" <${data.email || process.env.EMAIL_FROM}>`,
-      to: process.env.NODE_ENV === 'development' ? 'test@example.com' : process.env.EMAIL_TO,
+      from: `"${data.fullName || 'Site Web ELAS'}" <${process.env.EMAIL_SERVER_USER}>`,
+      to: process.env.EMAIL_TO,
       subject: `Nouvelle demande de devis pour : ${data.projectType || 'Projet non spécifié'}`,
       html: formatDataAsHtml(data),
-      replyTo: data.email || process.env.EMAIL_FROM, // Permet de répondre directement à la personne
+      replyTo: data.email || process.env.EMAIL_SERVER_USER,
     };
 
-    // Ajouter le fichier comme pièce jointe s'il existe
-    if (file) {
+    if (file && file.size > 0) {
       const buffer = Buffer.from(await file.arrayBuffer());
       mailOptions.attachments = [{
         filename: file.name,
@@ -130,22 +176,17 @@ export async function POST(request: Request) {
         contentType: file.type
       }];
     }
-
-    // Envoi de l'e-mail
-    const info = await transporter.sendMail(mailOptions);
-
-    // En mode développement, afficher l'URL de prévisualisation
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Message sent: %s', info.messageId);
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-    }
+    
+    await transporter.sendMail(mailOptions);
+    
+    await appendToSheet(data);
 
     return NextResponse.json({ 
       message: 'Demande envoyée avec succès',
-      previewUrl: process.env.NODE_ENV === 'development' ? nodemailer.getTestMessageUrl(info) : null
     }, { status: 200 });
+
   } catch (error) {
-    console.error('Erreur Nodemailer:', error);
-    return NextResponse.json({ message: "Erreur lors de l'envoi de l'e-mail" }, { status: 500 });
+    console.error('API Error:', error);
+    return NextResponse.json({ message: "Erreur lors du traitement de la demande" }, { status: 500 });
   }
 }
