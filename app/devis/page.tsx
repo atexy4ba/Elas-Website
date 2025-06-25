@@ -197,8 +197,10 @@ export default function QuotePage() {
         return (
           <>
             <div className="space-y-2">
-              <Label htmlFor="buildingType">Type de bâtiment</Label>
-              <Select onValueChange={(v) => handleInputChange("buildingType", v)} value={formData.buildingType}>
+              <Label htmlFor="buildingType">
+                Type de bâtiment <span style={{ color: "red" }}>*</span>
+              </Label>
+              <Select onValueChange={(v) => handleInputChange("buildingType", v)} value={formData.buildingType} required>
                 <SelectTrigger id="buildingType"><SelectValue placeholder="Sélectionnez un type" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="residentiel">Résidentiel</SelectItem>
@@ -209,16 +211,20 @@ export default function QuotePage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Nature du projet</Label>
-              <RadioGroup value={formData.projectNature} onValueChange={(v) => handleInputChange("projectNature", v)} className="flex space-x-4">
+              <Label>
+                Nature du projet <span style={{ color: "red" }}>*</span>
+              </Label>
+              <RadioGroup value={formData.projectNature} onValueChange={(v) => handleInputChange("projectNature", v)} className="flex space-x-4" required>
                 <div className="flex items-center space-x-2"><RadioGroupItem value="nouvelle" id="r1" /><Label htmlFor="r1">Nouvelle installation</Label></div>
                 <div className="flex items-center space-x-2"><RadioGroupItem value="modernisation" id="r2" /><Label htmlFor="r2">Modernisation</Label></div>
                 <div className="flex items-center space-x-2"><RadioGroupItem value="maintenance" id="r3" /><Label htmlFor="r3">Maintenance</Label></div>
               </RadioGroup>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="floorCount">Nombre d'étages</Label>
-              <Input id="floorCount" type="number" placeholder="Ex: 5" value={formData.floorCount || ''} onChange={(e) => handleInputChange("floorCount", e.target.value)} />
+              <Label htmlFor="floorCount">
+                Nombre d'étages <span style={{ color: "red" }}>*</span>
+              </Label>
+              <Input id="floorCount" type="number" placeholder="Ex: 5" value={formData.floorCount || ''} onChange={(e) => handleInputChange("floorCount", e.target.value)} required />
             </div>
           </>
         )
@@ -226,8 +232,10 @@ export default function QuotePage() {
       case "monte-voiture":
         return (
             <div className="space-y-2">
-                <Label htmlFor="maxLoad">Charge maximale souhaitée (kg)</Label>
-                <Input id="maxLoad" type="number" placeholder="Ex: 1000" value={formData.maxLoad || ''} onChange={(e) => handleInputChange("maxLoad", e.target.value)} />
+              <Label htmlFor="maxLoad">
+                Charge maximale souhaitée (kg) <span style={{ color: "red" }}>*</span>
+              </Label>
+              <Input id="maxLoad" type="number" placeholder="Ex: 1000" value={formData.maxLoad || ''} onChange={(e) => handleInputChange("maxLoad", e.target.value)} required />
             </div>
         )
       default: return null
@@ -408,7 +416,7 @@ export default function QuotePage() {
                                 <Textarea id="additionalInfo" placeholder="Ex: Accès difficile, dimensions spécifiques..." value={formData.additionalInfo || ''} onChange={(e) => handleInputChange("additionalInfo", e.target.value)} />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="file-upload">Vous avez un plan ou un cahier des charges ? (Optionnel)</Label>
+                                <Label htmlFor="file-upload">Vous avez un plan ou un cahier des charges ? <span className="text-gray-400 text-xs">(Optionnel)</span></Label>
                                 <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition-colors">
                                     <Upload className="mx-auto h-8 w-8 text-gray-400 mb-2"/>
                                     <span className="text-sm text-gray-600">{formData.file ? formData.file.name : 'Cliquez pour charger un fichier'}</span>
@@ -424,27 +432,49 @@ export default function QuotePage() {
                         <form onSubmit={handleSubmit} className="space-y-4">
                           <div className="grid sm:grid-cols-2 gap-4">
                              <div className="space-y-2">
-                                <Label htmlFor="contactType">Vous êtes</Label>
-                                <Select onValueChange={(v) => handleInputChange("contactType", v)} value={formData.contactType}><SelectTrigger id="contactType"><SelectValue placeholder="Sélectionnez votre profil" /></SelectTrigger><SelectContent><SelectItem value="particulier">Particulier</SelectItem><SelectItem value="architecte">Architecte</SelectItem><SelectItem value="promoteur">Promoteur</SelectItem><SelectItem value="syndic">Syndic</SelectItem><SelectItem value="autre">Autre</SelectItem></SelectContent></Select>
+                                <Label htmlFor="contactType">
+                                  Vous êtes <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <Select onValueChange={(v) => handleInputChange("contactType", v)} value={formData.contactType} required>
+                                  <SelectTrigger id="contactType"><SelectValue placeholder="Sélectionnez votre profil" /></SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="particulier">Particulier</SelectItem>
+                                    <SelectItem value="architecte">Architecte</SelectItem>
+                                    <SelectItem value="promoteur">Promoteur</SelectItem>
+                                    <SelectItem value="syndic">Syndic</SelectItem>
+                                    <SelectItem value="autre">Autre</SelectItem>
+                                  </SelectContent>
+                                </Select>
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="fullName">Nom complet</Label>
+                                <Label htmlFor="fullName">
+                                  Nom complet <span style={{ color: "red" }}>*</span>
+                                </Label>
                                 <Input id="fullName" placeholder="Votre nom" value={formData.fullName || ''} onChange={(e) => handleInputChange("fullName", e.target.value)} required />
                             </div>
                           </div>
                           <div className="grid sm:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label htmlFor="email">Adresse e-mail</Label>
+                                <Label htmlFor="email">
+                                  Adresse e-mail <span style={{ color: "red" }}>*</span>
+                                </Label>
                                 <Input id="email" type="email" placeholder="nom@exemple.com" value={formData.email || ''} onChange={(e) => handleInputChange("email", e.target.value)} required />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="phone">Numéro de téléphone</Label>
+                                <Label htmlFor="phone">
+                                  Numéro de téléphone <span style={{ color: "red" }}>*</span>
+                                </Label>
                                 <Input id="phone" type="tel" placeholder="05 XX XX XX XX" value={formData.phone || ''} onChange={(e) => handleInputChange("phone", e.target.value)} required />
                             </div>
                           </div>
                            <div className="space-y-2">
-                                <Label htmlFor="wilaya">Wilaya du projet</Label>
-                                <Select onValueChange={(v) => handleInputChange("wilaya", v)} value={formData.wilaya}><SelectTrigger id="wilaya"><SelectValue placeholder="Sélectionnez une wilaya" /></SelectTrigger><SelectContent>{wilayas.map(w => <SelectItem key={w} value={w}>{w}</SelectItem>)}</SelectContent></Select>
+                                <Label htmlFor="wilaya">
+                                  Wilaya du projet <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <Select onValueChange={(v) => handleInputChange("wilaya", v)} value={formData.wilaya} required>
+                                  <SelectTrigger id="wilaya"><SelectValue placeholder="Sélectionnez une wilaya" /></SelectTrigger>
+                                  <SelectContent>{wilayas.map(w => <SelectItem key={w} value={w}>{w}</SelectItem>)}</SelectContent>
+                                </Select>
                             </div>
                         </form>
                       </div>
