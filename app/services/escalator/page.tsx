@@ -151,8 +151,153 @@ export default function EscalatorPage() {
                 </p>
             </div>
         </section>
-        {/* Caractéristiques du service */}
+        {/* Section des produits escalator */}
         <section className="py-16 md:py-24 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Nos Modèles d'Escaliers Mécaniques</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Produit 1 - Escalator Standard */}
+              <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="relative h-48 bg-gradient-to-br from-blue-500 to-blue-700">
+                  <img 
+                    src="/images/escalator.png" 
+                    alt="Escalator Standard" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded text-sm font-semibold text-blue-700">
+                    Standard
+                  </div>
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-xl">Escalator Standard ES-600</CardTitle>
+                  <CardDescription>
+                    Solution économique pour les centres commerciaux et espaces publics à trafic modéré
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="font-semibold text-gray-700">Largeur:</span>
+                      <p className="text-gray-600">600 mm</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Inclinaison:</span>
+                      <p className="text-gray-600">30°</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Vitesse:</span>
+                      <p className="text-gray-600">0,5 m/s</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Capacité:</span>
+                      <p className="text-gray-600">6000 pers/h</p>
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <Button className="w-full btn-gradient">
+                      <Eye className="mr-2 h-4 w-4" />
+                      Voir les détails
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Produit 2 - Escalator Premium */}
+              <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="relative h-48 bg-gradient-to-br from-purple-500 to-purple-700">
+                  <img 
+                    src="/images/escalator.png" 
+                    alt="Escalator Premium" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded text-sm font-semibold text-purple-700">
+                    Premium
+                  </div>
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-xl">Escalator Premium EP-800</CardTitle>
+                  <CardDescription>
+                    Escalier mécanique haute performance avec options VVVF et éclairage LED intégré
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="font-semibold text-gray-700">Largeur:</span>
+                      <p className="text-gray-600">800 mm</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Inclinaison:</span>
+                      <p className="text-gray-600">30° / 35°</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Vitesse:</span>
+                      <p className="text-gray-600">0,5 m/s (VVVF)</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Capacité:</span>
+                      <p className="text-gray-600">9000 pers/h</p>
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <Button className="w-full btn-gradient">
+                      <Eye className="mr-2 h-4 w-4" />
+                      Voir les détails
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Produit 3 - Escalator Heavy Duty */}
+              <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="relative h-48 bg-gradient-to-br from-orange-500 to-orange-700">
+                  <img 
+                    src="/images/escalator.png" 
+                    alt="Escalator Heavy Duty" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-4 right-4 bg-white/90 px-2 py-1 rounded text-sm font-semibold text-orange-700">
+                    Heavy Duty
+                  </div>
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-xl">Escalator Heavy Duty HD-1000</CardTitle>
+                  <CardDescription>
+                    Escalier mécanique robuste pour les stations de métro et aéroports à très fort trafic
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="font-semibold text-gray-700">Largeur:</span>
+                      <p className="text-gray-600">1000 mm</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Inclinaison:</span>
+                      <p className="text-gray-600">30°</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Vitesse:</span>
+                      <p className="text-gray-600">0,65 m/s</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Capacité:</span>
+                      <p className="text-gray-600">11000 pers/h</p>
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <Button className="w-full btn-gradient">
+                      <Eye className="mr-2 h-4 w-4" />
+                      Voir les détails
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+        {/* Caractéristiques du service */}
+        <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">Caractéristiques du service</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

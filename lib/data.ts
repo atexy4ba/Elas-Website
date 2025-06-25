@@ -35,7 +35,7 @@ export const servicesData: Record<string, any> = {
   'monte-personne': {
     id: 'monte-personne',
     title: "Nos Solutions de Monte-Personnes",
-    heroImage: "/images/hero-monte-personne.jpg",
+    heroImage: "/projets/monte-personne.png",
     intro: {
       title: "Confort, Sécurité et Élégance à Chaque Étage",
       description: "Les monte-personnes, ou ascenseurs de personnes, sont conçus pour assurer le transport vertical des individus de manière confortable, sûre et efficace dans tous types de bâtiments. Elas Trading, en s'appuyant sur des composants de haute qualité et une ingénierie expérimentée, propose des solutions sur mesure qui s'intègrent parfaitement à l'architecture de chaque projet, qu'il s'agisse de constructions neuves ou de rénovations."
@@ -248,7 +248,7 @@ export const projectsData = [
     year: "2021",
     type: "Escalator Mécanique",
     description: "Installation d'escaliers mécaniques haute performance pour une station de transport public à fort trafic.",
-    image: "/images/projects/bursaray.png",
+    image: "/images/bursaray.jpg",
     capacity: "9000 pers/h",
     floors: "2 niveaux",
     features: ["Haute fréquentation", "Sécurité maximale EN 115", "Fonctionnement VVVF"],
@@ -260,7 +260,7 @@ export const projectsData = [
     year: "2022",
     type: "Monte Personnes",
     description: "Installation d'un ascenseur extérieur modèle AKE S-LINE pour une passerelle piétonne, conçu pour les espaces sans fosse.",
-    image: "/images/projects/s-line-passerelle.png",
+    image: "/images/passerelle.jpg",
     capacity: "630 kg",
     floors: "2 arrêts",
     features: ["Utilisation extérieure", "Sans salle des machines", "Conforme EN 81-70/71"],
@@ -272,7 +272,7 @@ export const projectsData = [
     year: "2020",
     type: "Monte-Personne",
     description: "Fourniture et pose de 8 ascenseurs pour un programme national de l'Entreprise Nationale de Promotion Immobilière (ENPI).",
-    image: "/images/projects/projet-lpp-medea.png",
+    image: "/images/medealpp.jpeg",
     capacity: "450-630 kg",
     floors: "Variable",
     features: ["Résidentiel Public", "ENPI", "Marché Public", "Installation Neuve"]
@@ -284,7 +284,7 @@ export const projectsData = [
     year: "2023-2024",
     type: "Monte-Personne",
     description: "Installation d'ascenseurs haute performance pour un immeuble de bureaux moderne et un pôle administratif majeur.",
-    image: "/images/projects/tour-affaires-medea.png",
+    image: "/images/Medea.jpg",
     capacity: "630-1000 kg",
     floors: "Multi-étages",
     features: ["Tertiaire", "Bureaux", "Haute Performance", "Secteur Public"]
@@ -296,7 +296,7 @@ export const projectsData = [
     year: "2022-2024",
     type: "Monte-Personne",
     description: "Fourniture d'ascenseurs de luxe avec finitions sur-mesure pour un promoteur de renom dans un quartier prestigieux.",
-    image: "/images/projects/residence-hydra.png",
+    image: "/images/résidence.jpg",
     capacity: "450 kg",
     floors: "5-10 étages",
     features: ["Résidentiel Privé", "Luxe", "Finitions sur-mesure", "Promoteur Privé"]
@@ -308,7 +308,7 @@ export const projectsData = [
     year: "2021-2023",
     type: "Monte-Charge",
     description: "Installation de monte-charges en inox, conçus pour respecter les normes d'hygiène strictes des Bonnes Pratiques de Fabrication (BPF).",
-    image: "/images/projects/unite-pharma-constantine.png",
+    image: "/images/images.jpg",
     capacity: "1000-2000 kg",
     floors: "2-4 étages",
     features: ["Industrie", "Pharmaceutique", "Normes BPF", "Inox", "Salle Blanche"]
@@ -320,7 +320,7 @@ export const projectsData = [
     year: "2022-2024",
     type: "Monte-Charge",
     description: "Fourniture de monte-charges de grande capacité (heavy-duty) pour un usage intensif dans un entrepôt à fort trafic.",
-    image: "/images/projects/plateforme-logistique-rouiba.png",
+    image: "/images/montecharge.png",
     capacity: "Jusqu'à 5000 kg",
     floors: "2-3 niveaux",
     features: ["Logistique", "Entrepôt", "Grande Capacité", "Usage Intensif"]
@@ -332,7 +332,7 @@ export const projectsData = [
     year: "2020-2023",
     type: "Monte-Malade",
     description: "Équipement complet d'un établissement hospitalier moderne avec des monte-lits, monte-charges et monte-plats.",
-    image: "/images/projects/hopital-chlef.png",
+    image: "/images/chlef.jpg",
     capacity: "1600-2500 kg (Monte-lit)",
     floors: "Multi-étages",
     features: ["Santé", "Hôpital", "Monte-lit", "Accessibilité", "Hygiène"]
@@ -344,7 +344,7 @@ export const projectsData = [
     year: "2022-2024",
     type: "Monte-Voiture",
     description: "Installation d'un système de monte-voiture pour optimiser le stationnement des véhicules de direction en sous-sol.",
-    image: "/images/projects/monte-voiture-banque.png",
+    image: "/images/babez.jpg",
     capacity: "Jusqu'à 3000 kg",
     floors: "Sous-sol",
     features: ["Tertiaire", "Banque", "Parking Optimisé", "Monte-voiture"]
@@ -356,7 +356,7 @@ export const projectsData = [
     year: "2023-2024",
     type: "Ascenseur PMR",
     description: "Installation de plateformes élévatrices et d'ascenseurs adaptés pour garantir une accessibilité universelle à tous les niveaux de l'établissement.",
-    image: "/images/projects/faculte-medecine-alger.png",
+    image: "/images/ziania.jpg",
     capacity: "340-400 kg",
     floors: "Multi-étages",
     features: ["Éducation", "Université", "Accessibilité Universelle", "PMR"]
@@ -368,7 +368,7 @@ export const projectsData = [
     year: "2022-2024",
     type: "Ascenseur PMR",
     description: "Installation d'un ascenseur privatif sur-mesure pour le confort, l'autonomie et l'accessibilité au sein d'une résidence privée.",
-    image: "/images/projects/villa-cheraga-pmr.png",
+    image: "/images/cheraga.jpg",
     capacity: "250-400 kg",
     floors: "2-4 étages",
     features: ["Résidentiel Privé", "Luxe", "Confort", "Ascenseur Privatif", "PMR"]
@@ -380,7 +380,7 @@ export const projectsData = [
     year: "2021-2023",
     type: "Escalator",
     description: "Installation d'escaliers mécaniques pour fluidifier la circulation des milliers de visiteurs quotidiens dans les différents niveaux du centre.",
-    image: "/images/projects/cc-gardencity.png",
+    image: "/images/garden.jpg",
     capacity: "9000 personnes/heure",
     floors: "Multi-niveaux",
     features: ["Commerce", "Centre Commercial", "Flux de visiteurs", "Escalator"]
@@ -392,7 +392,7 @@ export const projectsData = [
     year: "2024-2026",
     type: "Escalator",
     description: "Capacité à fournir et installer des escalators robustes (heavy-duty) pour les infrastructures de transport public comme les gares et stations de métro.",
-    image: "/images/projects/station-metro.png",
+    image: "/images/infra.jpg",
     capacity: "11000 personnes/heure",
     floors: "Variable",
     features: ["Transport Public", "Métro", "Gare", "Heavy-Duty", "Robustesse"]
