@@ -1,8 +1,3 @@
-Voici le modèle de `README.md` complet et structuré, prêt à être copié-collé pour votre nouveau projet. Il est basé sur l'arborescence et les technologies détectées dans votre dépôt :
-
----
-
-```markdown
 # Elas-Website
 
 ## 📝 Description
